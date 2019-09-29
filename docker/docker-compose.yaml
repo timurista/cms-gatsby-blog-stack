@@ -1,0 +1,16 @@
+version: "3"
+services:
+  gatsby-blog:
+    build: ../gatsby-client-blog
+    networks:
+      - overlay
+    ports:
+      - "8000:8000"
+    volumes:
+      - data:/var/lib/data
+
+volumes:
+  data:
+
+networks:
+  overlay:
