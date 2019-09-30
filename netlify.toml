@@ -11,7 +11,7 @@
   publish = "gatsby-client-blog/public"
 
   # Default build command.
-  command = "echo 'PWD' && pwd; npm run build;"
+  command = "npm run build"
 
 # Production context: all deploys from the Production branch set in your site's
 # deploy contexts will inherit these settings.
