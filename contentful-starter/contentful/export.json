@@ -500,13 +500,13 @@
             },
             "fields": {
                 "name": {
-                    "en-US": "John Doe"
+                    "en-US": "Tim Urista"
                 },
                 "title": {
-                    "en-US": "Web Developer"
+                    "en-US": "Analytics, Docker, UI expert"
                 },
                 "company": {
-                    "en-US": "ACME"
+                    "en-US": "Roku"
                 },
                 "shortBio": {
                     "en-US": "Research and recommendations for modern stack websites."
