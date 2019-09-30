@@ -4,20 +4,32 @@ import Helmet from 'react-helmet'
 import get from 'lodash/get'
 import Img from 'gatsby-image'
 import Layout from '../components/layout'
+import Share from '../components/share'
 
 import heroStyles from '../components/hero.module.css'
 
 class BlogPostTemplate extends React.Component {
   render() {
+    const twitterHandle = get(
+      this.props,
+      'data.site.siteMetadata.twitterHandle'
+    )
+    const url = get(this.props, 'data.site.siteMetadata.url')
+    const slug = get(this.props, 'pageContext.slug')
+    const tags = get(this.props, 'data.tags')
     const post = get(this.props, 'data.contentfulBlogPost')
     const siteTitle = get(this.props, 'data.site.siteMetadata.title')
 
     return (
-      <Layout location={this.props.location} >
+      <Layout location={this.props.location}>
         <div style={{ background: '#fff' }}>
           <Helmet title={`${post.title} | ${siteTitle}`} />
           <div className={heroStyles.hero}>
-            <Img className={heroStyles.heroImage} alt={post.title} fluid={post.heroImage.fluid} />
+            <Img
+              className={heroStyles.heroImage}
+              alt={post.title}
+              fluid={post.heroImage.fluid}
+            />
           </div>
           <div className="wrapper">
             <h1 className="section-headline">{post.title}</h1>
@@ -33,6 +45,16 @@ class BlogPostTemplate extends React.Component {
                 __html: post.body.childMarkdownRemark.html,
               }}
             />
+            <Share
+              socialConfig={{
+                twitterHandle,
+                config: {
+                  url: `${url}${slug}`,
+                  title: post.title,
+                },
+              }}
+              tags={tags}
+            />
           </div>
         </div>
       </Layout>
@@ -47,6 +69,8 @@ export const pageQuery = graphql`
     site {
       siteMetadata {
         title
+        twitterHandle
+        url
       }
     }
     contentfulBlogPost(slug: { eq: $slug }) {
@@ -57,6 +81,7 @@ export const pageQuery = graphql`
           ...GatsbyContentfulFluid_tracedSVG
         }
       }
+      tags
       body {
         childMarkdownRemark {
           html
