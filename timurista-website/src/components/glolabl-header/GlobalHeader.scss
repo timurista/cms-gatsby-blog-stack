@@ -1,0 +1,45 @@
+.Global-Header {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    background: transparent;
+    color: white;
+
+    .nav {
+        display: flex;
+        justify-content: space-between;
+        padding: 16px;
+    }
+
+    .nav-item {
+        color: white;
+        padding: 12px 16px;
+
+        &.box {
+            border: 1px solid white;
+        }
+
+        &.divider {
+            flex: 2;
+            text-align: right;
+        }
+    }
+
+    .nav-item + .nav-item {
+        margin-left: 8px;
+    }
+
+    .hero-image {
+        background: #222;
+
+    }
+
+    img.hero-image {
+        border-radius: 50%;
+        border: 2px solid grey;
+        width: 20vw;
+        height: 20vh;
+    }
+}
