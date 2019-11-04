@@ -1,7 +1,7 @@
 var contentful = require("contentful");
 var client = contentful.createClient({
-  space: "SPACE_ID",
-  accessToken: "CONTENT_DELIVERY_ACCESS_TOKEN"
+  space: process.env.SPACE_ID,
+  accessToken: process.env.CONTENT_DELIVERY_ACCESS_TOKEN
 });
 
 convertImage = rawImage => {
