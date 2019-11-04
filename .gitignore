@@ -65,3 +65,5 @@ secrets
 ghost-blog
 
 .aws-secrets
+
+serverless-bots
