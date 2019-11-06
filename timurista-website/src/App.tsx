@@ -6,6 +6,9 @@ import GlobalHeader from "./components/glolabl-header/GlobalHeader";
 import MainScreen from "./components/main-screen/MainScreen";
 import Footer from "./components/footer/Footer";
 import axios from "axios";
+import { useRoutes } from "hookrouter";
+import routes from "./routes/routes";
+import HomePage from "./pages/Home";
 // GlobalHe
 
 const CF_BACKEND_API =
@@ -14,21 +17,11 @@ const CF_BACKEND_API =
 // fetch on mount
 
 const App: React.FC = () => {
-  const [posts, setPosts] = React.useState([]);
-  React.useEffect(() => {
-    axios
-      .get(CF_BACKEND_API, {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Headers": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
-        }
-      })
-      .then(res => setPosts(res.data.body));
-  }, [setPosts]);
+  const routeResult = useRoutes(routes);
   return (
     <div className="App App-header">
       <GlobalHeader />
-      <MainScreen posts={posts} />
+      {routeResult || <HomePage />}
       <Footer />
     </div>
   );

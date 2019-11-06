@@ -14,6 +14,7 @@ import ThumbUp from "@material-ui/icons/ThumbUp";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { makeStyles } from "@material-ui/core/styles";
 import HeroImage from "../hero-image/HeroImage";
+import { A } from "hookrouter";
 
 const useStyles = makeStyles({
   card: {
@@ -77,7 +78,7 @@ function BlogPostShort({ post }: { post?: any }) {
           className={classes.img}
           style={{ backgroundImage: `url(${post.heroImage.imageUrl})` }}
         ></div>
-        <p>{post.description}</p>
+        <A href={`/blog/${post.id}`}>{post.description}</A>
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="learn more">

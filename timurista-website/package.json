@@ -5,7 +5,6 @@
   "dependencies": {
     "@material-ui/core": "^4.5.1",
     "@material-ui/icons": "^4.5.1",
-    "@types/hookrouter": "^2.2.1",
     "@types/jest": "24.0.20",
     "@types/node": "12.11.7",
     "@types/react": "16.9.11",
@@ -41,5 +40,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/hookrouter": "^2.2.1"
   }
 }
