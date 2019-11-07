@@ -1,26 +1,19 @@
 import React from "react";
+import { observer, inject } from "mobx-react";
+import { BlogStore } from "../store/BlogStore";
 import MainScreen from "../components/main-screen/MainScreen";
 import Footer from "../components/footer/Footer";
 import axios from "axios";
 import { useRoutes, A } from "hookrouter";
-// GlobalHe
+import get from "lodash.get";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
-const CF_BACKEND_API =
-  "https://g2vtb5opa8.execute-api.us-east-1.amazonaws.com/Prod/graphql";
-
-function HomePage() {
-  const [posts, setPosts] = React.useState([]);
-  React.useEffect(() => {
-    axios
-      .get(CF_BACKEND_API, {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Headers": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
-        }
-      })
-      .then(res => setPosts(res.data.body));
-  }, [setPosts]);
-  return <MainScreen posts={posts} />;
+function HomePage(props: { blogStore?: BlogStore }) {
+  const posts = get(props, "blogStore.posts", []);
+  const loading = get(props, "blogStore.loading", false);
+  return <MainScreen posts={posts} loading={loading} />;
 }
 
-export default HomePage;
+const injectedHomePage = inject("blogStore")(observer(HomePage));
+
+export default injectedHomePage;

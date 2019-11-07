@@ -6,6 +6,7 @@ import Card from "@material-ui/core/Card";
 import IconButton from "@material-ui/core/IconButton";
 import CardHeader from "@material-ui/core/CardHeader";
 import Avatar from "@material-ui/core/Avatar";
+import { format } from "date-fns";
 
 import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -20,15 +21,25 @@ const useStyles = makeStyles({
   card: {
     minWidth: 275,
     //   maxWidth: 500,
-    background: "rgb(222,222,222)"
+    background: "rgb(84,84,84)",
     //   background: "rgb(35,35,35)",
     //   border: "1px solid white",
     //   color: "white",
     //   background: "rgba(33,33,33,1.0)",
-    //   color: 'white',
+    color: "white"
+  },
+  description: {
+    color: "white",
+    padding: 16
   },
   avatar: {
     backgroundColor: "red"
+  },
+  cardheader: {
+    color: "white"
+  },
+  subheader: {
+    color: "rgb(156,156,156)"
   },
   bullet: {
     display: "inline-block",
@@ -36,7 +47,8 @@ const useStyles = makeStyles({
     transform: "scale(0.8)"
   },
   title: {
-    fontSize: 14
+    fontSize: 14,
+    color: "white"
   },
   pos: {
     marginBottom: 12
@@ -56,6 +68,7 @@ function BlogPostShort({ post }: { post?: any }) {
   return (
     <Card className={classes.card}>
       <CardHeader
+        className={classes.cardheader}
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
             {post.author &&
@@ -70,15 +83,23 @@ function BlogPostShort({ post }: { post?: any }) {
             <MoreVertIcon />
           </IconButton>
         }
-        title={post.title}
-        subheader={post.publishedDate}
+        title={
+          <A className={classes.title} href={`/blog/${post.id}`}>
+            {post.title}
+          </A>
+        }
+        subheader={
+          <div className={classes.subheader}>
+            {format(new Date(post.publishedDate), "MMM d, yyyy")}
+          </div>
+        }
       />
       <CardContent>
         <div
           className={classes.img}
           style={{ backgroundImage: `url(${post.heroImage.imageUrl})` }}
         ></div>
-        <A href={`/blog/${post.id}`}>{post.description}</A>
+        <div className={classes.description}>{post.description}</div>
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="learn more">

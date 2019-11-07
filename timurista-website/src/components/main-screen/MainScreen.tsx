@@ -3,6 +3,7 @@ import "./MainScreen.scss";
 import BlogPostShort from "../blog-post-short/BlogPostShort";
 
 import { makeStyles } from "@material-ui/core/styles";
+import { CircularProgress } from "@material-ui/core";
 
 const useStyles = makeStyles({
   card: {
@@ -31,17 +32,24 @@ const useStyles = makeStyles({
   }
 });
 
-function MainScreen({ posts = [] }) {
+function MainScreen({ posts = [], loading = true }) {
   const classes = useStyles();
   return (
     <div className="Main-Screen">
-      <ul>
-        {posts.map((post: any) => (
-          <li key={post.id}>
-            <BlogPostShort post={post} />
-          </li>
-        ))}
-      </ul>
+      {loading && (
+        <div className="ghost-components">
+          <CircularProgress color="secondary" />
+        </div>
+      )}
+      {!loading && (
+        <ul>
+          {posts.map((post: any) => (
+            <li key={post.id}>
+              <BlogPostShort post={post} />
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
