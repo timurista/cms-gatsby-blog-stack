@@ -14,13 +14,10 @@ function GlobalHeader() {
           <A href="/blog">Blog</A>
         </li>
         <li className="nav-item">
-          <a>Learn for life</a>
+          <A href="/blog">Human 2.0</A>
         </li>
         <li className="nav-item">
-          <a>Projects</a>
-        </li>
-        <li className="nav-item">
-          <a>Services</a>
+          <A href="/blog">Services</A>
         </li>
       </ul>
       <HeroImage />

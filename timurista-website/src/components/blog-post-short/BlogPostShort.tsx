@@ -1,7 +1,6 @@
 import React from "react";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import IconButton from "@material-ui/core/IconButton";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -9,12 +8,10 @@ import Avatar from "@material-ui/core/Avatar";
 import { format } from "date-fns";
 
 import ShareIcon from "@material-ui/icons/Share";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ThumbUp from "@material-ui/icons/ThumbUp";
 
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { makeStyles } from "@material-ui/core/styles";
-import HeroImage from "../hero-image/HeroImage";
 import { A } from "hookrouter";
 
 const useStyles = makeStyles({
