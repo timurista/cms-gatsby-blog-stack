@@ -59,6 +59,7 @@ const useStyles = makeStyles({
 
 function BlogPostShort({ post }: { post?: any }) {
   const classes = useStyles();
+  const blogIdUri = encodeURI(post.slug)
   if (!post) {
     return null;
   }
@@ -81,7 +82,7 @@ function BlogPostShort({ post }: { post?: any }) {
           </IconButton>
         }
         title={
-          <A className={classes.title} href={`/blog/${post.id}`}>
+          <A className={classes.title} href={`/blog/${blogIdUri}`}>
             {post.title}
           </A>
         }
