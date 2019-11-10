@@ -27,13 +27,16 @@ const useStyles = makeStyles({
   },
   description: {
     color: "white",
-    padding: 16
+    padding: 16,
+    fontSize: 16,
   },
   avatar: {
-    backgroundColor: "red"
+    backgroundColor: "#BB86FC",
+    color: "black"
   },
   cardheader: {
-    color: "white"
+    color: "white",
+    textDecoration: 'none'
   },
   subheader: {
     color: "rgb(156,156,156)"
@@ -44,8 +47,9 @@ const useStyles = makeStyles({
     transform: "scale(0.8)"
   },
   title: {
-    fontSize: 14,
-    color: "white"
+    fontSize: 18,
+    color: "white",
+    textDecoration: 'none'
   },
   pos: {
     marginBottom: 12

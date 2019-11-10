@@ -7,9 +7,10 @@ function GlobalHeader() {
   return (
     <header className="Global-Header">
       <ul className="nav">
-        <li className="nav-item box">
-          <A href="/">Tim Urista</A>
+        <li className="nav-item">
+          <A className="box" href="/">Tim Urista</A>
         </li>
+        <HeroImage />
         <li className="nav-item divider">
           <A href="/blog">Blog</A>
         </li>
@@ -20,7 +21,7 @@ function GlobalHeader() {
           <A href="/blog">Services</A>
         </li>
       </ul>
-      <HeroImage />
+      
     </header>
   );
 }

@@ -11,8 +11,18 @@ function BlogPost({ post }: BlogPostProps) {
     console.log('post', post)
     return(
         <div className="Blog-Post">
-            <h1>{post.title}</h1>
-            <div><ReactMarkdown source={post.body || ''} /></div>
+            <div className="hero-image">
+                <picture>
+                    {/* <source srcset={post.heroImage || ''}
+            media="(min-width: 800px)"></source> */}
+                    <img alt={post.heroImage.title} src={post.heroImage.imageUrl || ""}></img>
+                </picture>
+                <div className="overlay"></div>
+            </div>
+            <div className="contents">
+                <h1>{post.title}</h1>
+                <div><ReactMarkdown source={post.body || ''} /></div>
+            </div>
         </div>
     )
 }

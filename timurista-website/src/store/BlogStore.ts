@@ -5,12 +5,18 @@ import get from 'lodash.get'
 const CF_BACKEND_API =
   "https://g2vtb5opa8.execute-api.us-east-1.amazonaws.com/Prod/graphql";
 
+export interface HeroImage {
+  imageUrl: string;
+  title: string;
+}
+
 export interface Post {
   id?: string;
   seen: boolean;
   body?: string;
   slug: string;
   title: string;
+  heroImage: HeroImage;
 }
 
 export class BlogStore {
