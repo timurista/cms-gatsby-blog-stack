@@ -2,8 +2,13 @@ import React, { useEffect, useState } from "react";
 // import MediumClap from "./medium-clap/MediumClap";
 import "./SideBarActions.scss";
 import IconButton from "@material-ui/core/IconButton";
+import { Author } from "../../store/BlogStore";
+import Button from "@material-ui/core/Button";
 
-function SidebarActions() {
+function SidebarActions(props: { author: Author }) {
+  const author = props.author
+    ? props.author
+    : { title: "", name: "Unknown", shortBio: "" };
   //   let observer = null;
   const [hidden, setHidden] = useState(true);
   useEffect(() => {
@@ -25,9 +30,10 @@ function SidebarActions() {
   return (
     <div className={`Sidebar-Actions ${!hidden ? "show" : ""}`}>
       <div className="follow-details">
-        <div className="fas fa-user-circle"></div>
-
-        <div className="follow">Follow</div>
+        {/* <div className="fas fa-user-circle"></div> */}
+        <h5>{author.name}</h5>
+        <p>{author.shortBio}</p>
+        <Button className="follow">Follow</Button>
       </div>
       <IconButton>
         <div className="far fa-hand-spock"></div>

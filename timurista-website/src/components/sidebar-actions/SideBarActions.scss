@@ -2,8 +2,8 @@
   opacity: 0;
   padding: 16px;
   border-radius: 8px;
-  border: 1px solid #ddd;
-  min-width: 180px;
+  width: 180px;
+
   background: transparent;
   position: fixed;
   left: calc(50% - 410px - 18vw);
@@ -19,6 +19,10 @@
     opacity: 1;
   }
 
+  p {
+    font-size: 1.1rem;
+  }
+
   div + div {
     margin-top: 16px;
   }
@@ -30,6 +34,7 @@
     font-size: 14px;
     text-transform: uppercase;
     color: lightseagreen;
+    width: 100%;
   }
 
   .follow-details {
@@ -41,8 +46,8 @@
     color: white;
     // border-color: #ddd;
     // border: 1px solid;
-    height: 48px;
-    width: 48px;
+    // height: 48px;
+    // width: 48px;
     margin-top: 12px;
   }
 }

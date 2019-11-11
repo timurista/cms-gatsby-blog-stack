@@ -27,7 +27,7 @@ function BlogPost({ post }: BlogPostProps) {
         <h1 id="article-header">{post.title}</h1>
 
         <div>
-          <SidebarActions />
+          <SidebarActions author={post.author} />
           <ReactMarkdown source={post.body || ""} />
         </div>
       </div>

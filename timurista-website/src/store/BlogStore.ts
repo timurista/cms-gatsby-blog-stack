@@ -10,12 +10,19 @@ export interface HeroImage {
   title: string;
 }
 
+export interface Author {
+  name: string;
+  title: string;
+  shortBio: string;
+}
+
 export interface Post {
   id?: string;
   seen: boolean;
   body?: string;
   slug: string;
   title: string;
+  author: Author;
   heroImage: HeroImage;
 }
 
