@@ -1,54 +1,56 @@
 .Blog-Post {
-    margin-top: 65px;
-    // height: 100vh;
-    background: #444;
-    color: #efefef;
-    
-    // padding: 16px;
-    // border-radius: 8px;
-    .contents {
-        margin: 0 auto;
-        max-width: calc(680px + 10vw);
-        padding: 16px 16px;
-        text-align: left;
-        font-family: medium-content-serif-font, Georgia, Cambria, "Times New Roman", Times, serif;
+  margin-top: 65px;
+  // height: 100vh;
+  background: #444;
+  color: #efefef;
 
+  // padding: 16px;
+  // border-radius: 8px;
+  .contents {
+    margin: 0 auto;
+    position: relative;
+    max-width: calc(680px + 10vw);
+    padding: 16px 16px;
+    text-align: left;
+    font-family: medium-content-serif-font, Georgia, Cambria, "Times New Roman",
+      Times, serif;
 
-        a {
-            color: #BB86FC;
-        }
-
-        p {
-            line-height: 1.58;
-            text-align: left;
-            color: #dedede;
-        }
-
-        ul {
-            list-style-type: circle;
-            li {
-                line-height: 1.62;
-            }
-        }
-        // margin: 0 64px;
+    a {
+      color: #bb86fc;
     }
 
-    .hero-image {
-        max-height: 56vh;
-        overflow: hidden;
-        position: relative;
-
-        .overlay {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 100%;
-            background: linear-gradient(
-                rgba(40,40,40,0),
-                rgba(40,40,40,0.0), 
-                rgba(40,40,40,0.0), 
-                rgba(40,40,40,0.1), 
-                #444);
-        }
+    p {
+      line-height: 1.58;
+      text-align: left;
+      color: #dedede;
     }
+
+    ul {
+      list-style-type: circle;
+      li {
+        line-height: 1.62;
+      }
+    }
+    // margin: 0 64px;
+  }
+
+  .hero-image {
+    max-height: 56vh;
+    overflow: hidden;
+    position: relative;
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+      background: linear-gradient(
+        rgba(40, 40, 40, 0),
+        rgba(40, 40, 40, 0),
+        rgba(40, 40, 40, 0),
+        rgba(40, 40, 40, 0.05),
+        #444
+      );
+    }
+  }
 }

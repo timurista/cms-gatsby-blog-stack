@@ -1,29 +1,37 @@
-import React from 'react';
-import { Post } from '../../store/BlogStore';
-import "./BlogPost.scss"
-import ReactMarkdown from 'react-markdown';
+import React from "react";
+import { Post } from "../../store/BlogStore";
+import "./BlogPost.scss";
+import ReactMarkdown from "react-markdown";
+import SidebarActions from "../sidebar-actions/SideBarActions";
+import "@fortawesome/fontawesome-free/css/all.css";
 
 export interface BlogPostProps {
-    post: Post
+  post: Post;
 }
 
 function BlogPost({ post }: BlogPostProps) {
-    console.log('post', post)
-    return(
-        <div className="Blog-Post">
-            <div className="hero-image">
-                <picture>
-                    {/* <source srcset={post.heroImage || ''}
-            media="(min-width: 800px)"></source> */}
-                    <img alt={post.heroImage.title} src={post.heroImage.imageUrl || ""}></img>
-                </picture>
-                <div className="overlay"></div>
-            </div>
-            <div className="contents">
-                <h1>{post.title}</h1>
-                <div><ReactMarkdown source={post.body || ''} /></div>
-            </div>
+  //   console.log("post", post);
+  return (
+    <div className="Blog-Post">
+      <div className="hero-image">
+        <picture>
+          <img
+            alt={post.heroImage.title}
+            src={post.heroImage.imageUrl || ""}
+          ></img>
+        </picture>
+        <div className="overlay"></div>
+      </div>
+
+      <div className="contents">
+        <h1 id="article-header">{post.title}</h1>
+
+        <div>
+          <SidebarActions />
+          <ReactMarkdown source={post.body || ""} />
         </div>
-    )
+      </div>
+    </div>
+  );
 }
-export default BlogPost
+export default BlogPost;

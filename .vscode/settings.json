@@ -1,7 +1,8 @@
 {
     "[javascript]": { 
-        "editor.formatOnType": true,
+        "editor.formatOnSave": true,
     },
+    "editor.formatOnSave": true,
     "eslint.autoFixOnSave": true,
     "tslint.autoFixOnSave": true,
 }

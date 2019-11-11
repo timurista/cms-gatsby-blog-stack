@@ -1,0 +1,57 @@
+.Sidebar-Actions {
+  opacity: 0;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  min-width: 180px;
+  background: transparent;
+  position: fixed;
+  left: calc(50% - 410px - 18vw);
+  top: 25%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  transition: fade-in 2000ms ease-in-out;
+
+  &.show {
+    opacity: 1;
+  }
+
+  div + div {
+    margin-top: 16px;
+  }
+
+  .follow {
+    padding: 8px;
+    border: 1px solid lightseagreen;
+    border-radius: 4px;
+    font-size: 14px;
+    text-transform: uppercase;
+    color: lightseagreen;
+  }
+
+  .follow-details {
+    padding: 16px;
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+  }
+  button.MuiButtonBase-root {
+    color: white;
+    // border-color: #ddd;
+    // border: 1px solid;
+    height: 48px;
+    width: 48px;
+    margin-top: 12px;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
