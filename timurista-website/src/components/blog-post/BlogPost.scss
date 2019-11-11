@@ -3,6 +3,7 @@
   // height: 100vh;
   background: #444;
   color: #efefef;
+  width: 100%;
 
   // padding: 16px;
   // border-radius: 8px;
@@ -38,6 +39,7 @@
     max-height: 56vh;
     overflow: hidden;
     position: relative;
+    width: 100%;
 
     .overlay {
       position: absolute;

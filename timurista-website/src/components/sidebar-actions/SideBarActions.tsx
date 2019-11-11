@@ -7,7 +7,6 @@ function SidebarActions() {
   //   let observer = null;
   const [hidden, setHidden] = useState(true);
   useEffect(() => {
-    console.log(document.querySelector("#article-header"));
     // createObserver(hidden, setHidden);
     function scrollHandler() {
       //   console.log(window.scrollY);

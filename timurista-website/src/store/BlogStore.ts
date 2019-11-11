@@ -1,6 +1,6 @@
 import { observable, computed, action, runInAction } from "mobx";
 import axios from "axios";
-import get from 'lodash.get'
+import get from "lodash.get";
 
 const CF_BACKEND_API =
   "https://g2vtb5opa8.execute-api.us-east-1.amazonaws.com/Prod/graphql";
@@ -27,10 +27,10 @@ export class BlogStore {
   constructor() {
     this.fetch((res: any) => {
       runInAction(() => {
-      console.log("setting result", res.data);
-      this.posts = res.data;
-      this.loading = false;
-    })});
+        this.posts = res.data;
+        this.loading = false;
+      });
+    });
   }
 
   @action async fetch(handler: Function, slug?: String) {
@@ -38,18 +38,17 @@ export class BlogStore {
     // const { data: { err, result } } = await app.axios('/files')
     let params = undefined;
     if (slug) {
-      params = { slug }
+      params = { slug };
     }
     axios({
-        method: "get",
-        url: CF_BACKEND_API, 
-        params,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Headers": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
-        }
-      })
-      .then(res => handler(res));
+      method: "get",
+      url: CF_BACKEND_API,
+      params,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+      }
+    }).then(res => handler(res));
   }
 
   @computed get completedCount() {
@@ -58,21 +57,23 @@ export class BlogStore {
 
   @action
   fetchCurrentPost(slug: String) {
-    if (get(this.currentPost, 'slug') === slug) {
+    if (get(this.currentPost, "slug") === slug) {
       return;
     }
     const post = this.posts.find(post => post.slug === slug);
     if (post) {
       this.currentPost = post;
-    } else {      
+    } else {
       this.loading = true;
-      this.fetch((res: any) => runInAction(() => {
-        console.log('server response body', res, res.data)
-        this.currentPost = res.data.find((d: Post) => d.slug === slug);
-        this.loading = false;
-      }), slug)
+      this.fetch(
+        (res: any) =>
+          runInAction(() => {
+            this.currentPost = res.data.find((d: Post) => d.slug === slug);
+            this.loading = false;
+          }),
+        slug
+      );
     }
-
   }
 
   report() {
