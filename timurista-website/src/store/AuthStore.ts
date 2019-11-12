@@ -2,6 +2,7 @@ import { observable, action } from "mobx";
 import axios from "axios";
 // import get from "lodash.get";
 
+const initialUrl = window.location.href;
 export const COGNITO_AUTH_LOGIN = `https://thetimurista.auth.us-east-1.amazoncognito.com/login?client_id=2k9cu38mg2h3ugqnpvc51gbg3a&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone&redirect_uri=${window.location.href}`;
 export const TOKEN_VERIFIER_URL = "#";
 
@@ -28,6 +29,7 @@ export class AuthStore {
     const token = parseToken();
     console.log(token, "verifying...");
     if (token) {
+      window.location.replace(initialUrl);
       this.fetchUserDetails(token);
     }
   }
