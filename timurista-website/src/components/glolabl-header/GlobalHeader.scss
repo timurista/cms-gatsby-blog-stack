@@ -29,8 +29,6 @@
       }
     }
 
-    
-
     &.divider {
       flex: 2;
       text-align: right;
@@ -43,6 +41,10 @@
 
   .hero-image {
     background: #222;
+  }
+
+  .login-button {
+    color: rgb(10, 255, 255);
   }
 
   img.hero-image {

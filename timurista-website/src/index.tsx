@@ -4,10 +4,12 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import blogStore from "../src/store/BlogStore";
+import authStore from "../src/store/AuthStore";
 import { Provider } from "mobx-react";
 
 const stores = {
-  blogStore
+  blogStore,
+  authStore
 };
 
 ReactDOM.render(
