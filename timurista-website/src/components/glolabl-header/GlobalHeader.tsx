@@ -32,12 +32,16 @@ function GlobalHeader(props: GlobalHeaderProps) {
         </li>
 
         <li>
-          <Button
-            className="login-button"
-            onClick={get(props, "authStore.login")}
-          >
-            login
-          </Button>
+          {get(props, "authStore.user") ? (
+            <span>{get(props, "authStore.user.username")}</span>
+          ) : (
+            <Button
+              className="login-button"
+              onClick={get(props, "authStore.login")}
+            >
+              login
+            </Button>
+          )}
         </li>
       </ul>
     </header>
