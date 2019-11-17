@@ -10,6 +10,7 @@
     "@types/node": "12.11.7",
     "@types/react": "16.9.11",
     "@types/react-dom": "16.9.3",
+    "assemblyscript": "^0.8.0",
     "axios": "^0.19.0",
     "date-fns": "^2.7.0",
     "hookrouter": "^1.2.3",
@@ -28,10 +29,14 @@
     "typescript": "3.6.4"
   },
   "scripts": {
+    "asc": "asc",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "asbuild:untouched": "asc assembly/index.ts -b build/untouched.wasm -t build/untouched.wat --sourceMap --validate --debug",
+    "asbuild:optimized": "asc assembly/index.ts -b build/optimized.wasm -t build/optimized.wat --sourceMap --validate --optimize",
+    "asbuild": "npm run asbuild:untouched && npm run asbuild:optimized"
   },
   "eslintConfig": {
     "extends": "react-app"
