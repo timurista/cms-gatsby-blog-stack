@@ -14,11 +14,12 @@ const allFeeds = [
 
 async function getAllFeeds() {
   let jsonRes: Array<any> = [];
-  allFeeds.forEach(async feedUrl => {
+  for (let feedUrl of allFeeds) {
+    console.log(feedUrl);
     let feed = await parser.parseURL(feedUrl);
-    console.log(feed.title);
-    jsonRes = [...jsonRes, ...feedUrl];
-  });
+    jsonRes.push(feed);
+    console.log(jsonRes);
+  }
   return jsonRes;
 }
 export const handler = async (event: any = {}): Promise<any> => {
