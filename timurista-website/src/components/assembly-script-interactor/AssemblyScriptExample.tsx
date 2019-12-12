@@ -1,6 +1,9 @@
 import { instantiateStreaming } from "assemblyscript/lib/loader";
 import { useEffect, useState } from "react";
 
+// example file: for ml in browser
+// https://github.com/YeasterEgg/kmeans-plusplus
+
 // function fibonacci(num: any) {
 //   var a = 1,
 //     b = 0,
