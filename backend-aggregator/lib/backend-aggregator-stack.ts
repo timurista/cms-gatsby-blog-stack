@@ -1,4 +1,6 @@
 import cdk = require("@aws-cdk/core");
+import events = require("@aws-cdk/aws-events");
+import targets = require("@aws-cdk/aws-events-targets");
 import lambda = require("@aws-cdk/aws-lambda");
 import path = require("path");
 import s3deploy = require("@aws-cdk/aws-s3-deployment");
@@ -59,6 +61,12 @@ export class BackendAggregatorStack extends cdk.Stack {
     bucket.grantReadWrite(lambdaFn);
     lambdaFn.addToRolePolicy(s3ReadWritePolicy);
 
-    // The code that defines your stack goes here
+    // Run every day at 6PM UTC
+    // See https://docs.aws.amazon.com/lambda/latest/dg/tutorial-scheduled-events-schedule-expressions.html
+    const rule = new events.Rule(this, "Rule", {
+      schedule: events.Schedule.expression("cron(0 18 ? * MON-FRI *)")
+    });
+
+    rule.addTarget(new targets.LambdaFunction(lambdaFn));
   }
 }

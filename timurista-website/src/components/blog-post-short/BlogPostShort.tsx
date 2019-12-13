@@ -28,7 +28,7 @@ const useStyles = makeStyles({
   description: {
     color: "white",
     padding: 16,
-    fontSize: 16,
+    fontSize: 16
   },
   avatar: {
     backgroundColor: "#BB86FC",
@@ -36,7 +36,7 @@ const useStyles = makeStyles({
   },
   cardheader: {
     color: "white",
-    textDecoration: 'none'
+    textDecoration: "none"
   },
   subheader: {
     color: "rgb(156,156,156)"
@@ -49,7 +49,7 @@ const useStyles = makeStyles({
   title: {
     fontSize: 18,
     color: "white",
-    textDecoration: 'none'
+    textDecoration: "none"
   },
   pos: {
     marginBottom: 12
@@ -63,7 +63,7 @@ const useStyles = makeStyles({
 
 function BlogPostShort({ post }: { post?: any }) {
   const classes = useStyles();
-  const blogIdUri = encodeURI(post.slug)
+  const blogIdUri = encodeURI(post.slug);
   if (!post) {
     return null;
   }
@@ -97,10 +97,12 @@ function BlogPostShort({ post }: { post?: any }) {
         }
       />
       <CardContent>
-        <div
-          className={classes.img}
-          style={{ backgroundImage: `url(${post.heroImage.imageUrl})` }}
-        ></div>
+        <a href={`${post.link}`}>
+          <div
+            className={classes.img}
+            style={{ backgroundImage: `url(${post.heroImage.imageUrl})` }}
+          ></div>
+        </a>
         <div className={classes.description}>{post.description}</div>
       </CardContent>
       <CardActions disableSpacing>

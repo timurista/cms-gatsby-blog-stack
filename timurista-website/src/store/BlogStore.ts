@@ -1,6 +1,7 @@
 import { observable, computed, action, runInAction } from "mobx";
 import axios from "axios";
 import get from "lodash.get";
+import HeroImage from "../components/hero-image/HeroImage";
 
 const CF_BACKEND_API =
   "https://g2vtb5opa8.execute-api.us-east-1.amazonaws.com/Prod/graphql";
@@ -21,6 +22,7 @@ export interface Post {
   seen: boolean;
   body?: string;
   slug: string;
+  description?: string;
   title: string;
   author: Author;
   heroImage: HeroImage;
@@ -32,9 +34,9 @@ export class BlogStore {
   @observable currentPost: Post | null = null;
 
   constructor() {
-    this.fetch((res: any) => {
+    this.fetch((posts: any) => {
       runInAction(() => {
-        this.posts = res.data;
+        this.posts = posts;
         this.loading = false;
       });
     });
@@ -47,15 +49,90 @@ export class BlogStore {
     if (slug) {
       params = { slug };
     }
-    axios({
+
+    // get the files from cf json
+    let cached_articles_url =
+      "http://d2z3zyrhi690um.cloudfront.net/blogs/articles.json";
+    cached_articles_url =
+      "https://tim-urista-web-blog-articles-distribution-v1.s3.amazonaws.com/blogs/articles.json";
+    const res = await axios({
       method: "get",
-      url: CF_BACKEND_API,
-      params,
+      url: cached_articles_url,
       headers: {
         "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+        "Access-Control-Allow-Headers": "GET,HEAD,OPTIONS"
       }
-    }).then(res => handler(res));
+    });
+    let agg = [];
+    for (let blog of res.data) {
+      agg.push(
+        ...blog.items.map((item: any) => {
+          // const slug =
+          const end = item.guid.split("/").reverse()[0];
+          const id = end;
+          const seen = false;
+          const body = item["content"] || item["content:encoded"];
+          const title = item.title;
+          const slug = end;
+          // const image = body.find('src=')
+          var regex = /<img.*?src="(.*?)"/;
+          const regexed = regex.exec(body);
+          // console.log("regexed", body, regexed);
+          var src = regexed ? regexed[1] : null;
+          const heroImage = {
+            imageUrl: src
+          };
+
+          const author = {
+            name: item.creator,
+            title: "",
+            shortBio: ""
+          };
+          let description = "";
+          if (item.contentSnippet) {
+            description = item.contentSnippet.split("Continue reading")[0];
+          }
+
+          const publishedDate = item.pubDate;
+
+          if (!heroImage.imageUrl) {
+            return null;
+          }
+
+          return {
+            ...item,
+            id,
+            description,
+            seen,
+            body,
+            slug,
+            title,
+            publishedDate,
+            author,
+            heroImage,
+            source: blog.title
+          };
+        })
+      );
+    }
+    console.log(agg);
+    // sort
+    agg.sort(
+      (a, b) =>
+        new Date(b.publishedDate).getTime() -
+        new Date(a.publishedDate).getTime()
+    );
+    handler(agg);
+
+    // axios({
+    //   method: "get",
+    //   url: CF_BACKEND_API,
+    //   params,
+    //   headers: {
+    //     "Access-Control-Allow-Origin": "*",
+    //     "Access-Control-Allow-Headers": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+    //   }
+    // }).then(res => handler(res));
   }
 
   @computed get completedCount() {
@@ -75,7 +152,7 @@ export class BlogStore {
       this.fetch(
         (res: any) =>
           runInAction(() => {
-            this.currentPost = res.data.find((d: Post) => d.slug === slug);
+            this.currentPost = res.find((d: Post) => d.slug === slug);
             this.loading = false;
           }),
         slug
