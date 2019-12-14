@@ -3,8 +3,8 @@ import axios from "axios";
 import get from "lodash.get";
 import HeroImage from "../components/hero-image/HeroImage";
 
-const CF_BACKEND_API =
-  "https://g2vtb5opa8.execute-api.us-east-1.amazonaws.com/Prod/graphql";
+// const CF_BACKEND_API =
+//   "https://g2vtb5opa8.execute-api.us-east-1.amazonaws.com/Prod/graphql";
 
 export interface HeroImage {
   imageUrl: string;
@@ -43,12 +43,13 @@ export class BlogStore {
   }
 
   @action async fetch(handler: Function, slug?: String) {
+    console.log(slug);
     // let data = null;
     // const { data: { err, result } } = await app.axios('/files')
-    let params = undefined;
-    if (slug) {
-      params = { slug };
-    }
+    // let params = undefined;
+    // if (slug) {
+    //   params = { slug };
+    // }
 
     // get the files from cf json
     let cached_articles_url =
