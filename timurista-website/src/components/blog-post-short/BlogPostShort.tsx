@@ -16,7 +16,8 @@ import { A } from "hookrouter";
 
 const useStyles = makeStyles({
   card: {
-    minWidth: 275,
+    width: 800,
+    margin: "0 auto",
     //   maxWidth: 500,
     background: "rgb(84,84,84)",
     //   background: "rgb(35,35,35)",

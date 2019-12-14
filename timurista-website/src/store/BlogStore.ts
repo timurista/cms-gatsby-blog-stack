@@ -19,17 +19,47 @@ export interface Author {
 
 export interface Post {
   id?: string;
-  seen: boolean;
+  seen?: boolean;
   body?: string;
   slug: string;
+  publishedDate?: any;
   description?: string;
-  title: string;
+  title?: string;
   author: Author;
   heroImage: HeroImage;
+  source?: string;
+}
+
+function createDummyPosts(n: number): Array<Post> {
+  let i = n;
+  let arr = [];
+  while (i > 0) {
+    arr.push({
+      id: i.toString(),
+      description: "",
+      seen: false,
+      body: "",
+      slug: "",
+      title: "",
+      publishedDate: new Date().toISOString(),
+      author: {
+        name: "",
+        title: "",
+        shortBio: ""
+      },
+      heroImage: {
+        title: "",
+        imageUrl: "https://via.placeholder.com/150"
+      },
+      source: "."
+    });
+    i = i - 1;
+  }
+  return arr;
 }
 
 export class BlogStore {
-  @observable posts: Array<Post> = [];
+  @observable posts: Array<Post> = createDummyPosts(5);
   @observable loading: boolean = true;
   @observable currentPost: Post | null = null;
 
@@ -44,6 +74,7 @@ export class BlogStore {
 
   @action async fetch(handler: Function, slug?: String) {
     console.log(slug);
+    // return;
     // let data = null;
     // const { data: { err, result } } = await app.axios('/files')
     // let params = undefined;
@@ -117,6 +148,7 @@ export class BlogStore {
       );
     }
     console.log(agg);
+    agg = agg.filter(a => a != null);
     // sort
     agg.sort(
       (a, b) =>
