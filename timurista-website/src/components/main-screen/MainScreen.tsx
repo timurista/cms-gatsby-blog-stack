@@ -1,7 +1,7 @@
 import React from "react";
 import "./MainScreen.scss";
 import BlogPostShort from "../blog-post-short/BlogPostShort";
-import { CircularProgress } from "@material-ui/core";
+// import { CircularProgress } from "@material-ui/core";
 
 function MainScreen({ posts = [], loading = true }) {
   return (
