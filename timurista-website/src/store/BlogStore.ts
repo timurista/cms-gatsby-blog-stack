@@ -87,6 +87,9 @@ export class BlogStore {
       "http://d2z3zyrhi690um.cloudfront.net/blogs/articles.json";
     cached_articles_url =
       "https://tim-urista-web-blog-articles-distribution-v1.s3.amazonaws.com/blogs/articles.json";
+    if (process.env.NODE_ENV === "production") {
+      cached_articles_url = "/blogs/articles.json";
+    }
     const res = await axios({
       method: "get",
       url: cached_articles_url,

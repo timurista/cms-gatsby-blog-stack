@@ -23,7 +23,7 @@ export class BackendAggregatorStack extends cdk.Stack {
     const s3ReadWritePolicy = new iam.PolicyStatement({
       effect: iam.Effect.ALLOW,
       actions: ["s3:*"],
-      resources: [bucket.bucketArn + "/*"]
+      resources: ["*"]
     });
 
     const distribution = new cloudfront.CloudFrontWebDistribution(
@@ -52,8 +52,10 @@ export class BackendAggregatorStack extends cdk.Stack {
       runtime: lambda.Runtime.NODEJS_10_X,
       handler: "lambda-handler.handler",
       code: new lambda.AssetCode(path.join(__dirname, "src")),
+      timeout: cdk.Duration.seconds(30),
       environment: {
         S3_BUCKET: bucket.bucketName,
+        S3_WEBSITE_BUCKET: "www.thetimurista.com",
         CF_DISTRIBUTION_ID: distribution.distributionId
       }
     });
@@ -63,10 +65,9 @@ export class BackendAggregatorStack extends cdk.Stack {
 
     // Run every day at 6PM UTC
     // See https://docs.aws.amazon.com/lambda/latest/dg/tutorial-scheduled-events-schedule-expressions.html
-    const rule = new events.Rule(this, "Rule", {
-      schedule: events.Schedule.expression("cron(0 18 ? * MON-FRI *)")
+    new events.Rule(this, "Rule", {
+      schedule: events.Schedule.expression("cron(0 0 ? * * *)"),
+      targets: [new targets.LambdaFunction(lambdaFn)]
     });
-
-    rule.addTarget(new targets.LambdaFunction(lambdaFn));
   }
 }

@@ -9,6 +9,8 @@ const cloudComputingMediumArticlesFeed =
 
 const parser = new Parser();
 const s3Bucket = process.env.S3_BUCKET || "";
+const s3WebsiteBucket = process.env.S3_WEBSITE_BUCKET || "";
+
 const distributionID = process.env.CF_DISTRIBUTION_ID || "";
 
 const cloudfront = new aws.CloudFront();
@@ -35,9 +37,9 @@ async function getAllFeeds() {
   return jsonRes;
 }
 
-async function saveFeeds(feeds: any) {
+async function saveFeeds(feeds: any, s3bucket: string) {
   const params = {
-    Bucket: s3Bucket,
+    Bucket: s3bucket,
     Key: "blogs/articles.json",
     Body: JSON.stringify(feeds)
   };
@@ -54,16 +56,19 @@ async function saveFeeds(feeds: any) {
   try {
     uploadedFile = await s3UploadPromise;
   } catch (e) {
+    console.error(e);
     throw new Error(e);
   }
-  console.log("FILE UPLOADED", uploadedFile.ETag);
+  console.log("FILE UPLOADED", uploadedFile.ETag, s3bucket);
   return uploadedFile.ETag;
 }
 
 export const handler = async (event: any = {}): Promise<any> => {
   try {
     const feeds = await getAllFeeds();
-    const feedsBucketUrl = await saveFeeds(feeds);
+    // save to website (daul write)
+    await saveFeeds(feeds, s3WebsiteBucket);
+    const feedsBucketUrl = await saveFeeds(feeds, s3Bucket);
     console.log("FEEDS BUCKET", feedsBucketUrl);
     return { statusCode: 200, body: JSON.stringify(feeds) };
   } catch (err) {
