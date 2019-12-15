@@ -67,3 +67,8 @@ ghost-blog
 .aws-secrets
 
 serverless-bots
+
+
+## python things
+backend-aggregator/lib/python-src/*
+!backend-aggregator/lib/python-src/pdfextractor.py
