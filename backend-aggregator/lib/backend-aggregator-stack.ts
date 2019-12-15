@@ -63,10 +63,10 @@ export class BackendAggregatorStack extends cdk.Stack {
     bucket.grantReadWrite(lambdaFn);
     lambdaFn.addToRolePolicy(s3ReadWritePolicy);
 
-    // Run every day at 6PM UTC
+    // Run every 3 hours a day
     // See https://docs.aws.amazon.com/lambda/latest/dg/tutorial-scheduled-events-schedule-expressions.html
     new events.Rule(this, "Rule", {
-      schedule: events.Schedule.expression("cron(0 0 ? * * *)"),
+      schedule: events.Schedule.expression("cron(0 3 ? * * *)"),
       targets: [new targets.LambdaFunction(lambdaFn)]
     });
   }

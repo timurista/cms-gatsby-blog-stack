@@ -1,8 +1,8 @@
 import React from "react";
 import { Post } from "../../store/BlogStore";
 import "./BlogPost.scss";
-import ReactMarkdown from "react-markdown";
-import SidebarActions from "../sidebar-actions/SideBarActions";
+// import ReactMarkdown from "react-markdown";
+// import SidebarActions from "../sidebar-actions/SideBarActions";
 import "@fortawesome/fontawesome-free/css/all.css";
 
 export interface BlogPostProps {
@@ -27,8 +27,9 @@ function BlogPost({ post }: BlogPostProps) {
         <h1 id="article-header">{post.title}</h1>
 
         <div>
-          <SidebarActions author={post.author} />
-          <ReactMarkdown source={post.body || ""} />
+          {/* <SidebarActions author={post.author} /> */}
+          <div dangerouslySetInnerHTML={{ __html: post.body || "" }} />
+          {/* <ReactMarkdown source={post.body || ""} /> */}
         </div>
       </div>
     </div>
