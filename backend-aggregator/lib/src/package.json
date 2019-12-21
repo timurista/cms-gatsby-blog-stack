@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "req-fast": "^0.2.19",
     "rss-parser": "^3.7.3"
   }
 }

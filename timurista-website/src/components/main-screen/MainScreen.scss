@@ -1,6 +1,7 @@
 .Main-Screen {
   background: #343434;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   // max-width: 800px;
   // margin: 0 auto;

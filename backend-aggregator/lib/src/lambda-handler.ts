@@ -1,6 +1,7 @@
 const aws = require("aws-sdk");
 // const ManagedUpload = require("@types/aws-sdk").S3.ManagedUpload;
 const Parser = require("rss-parser");
+const getArticle = require("get-medium-articles").getArticle;
 
 const myMediumArticlesFeed = "https://medium.com/feed/@timothy.urista";
 const aiMediumaArticlesFeed = "https://medium.com/feed/tag/ai";
@@ -16,11 +17,7 @@ const distributionID = process.env.CF_DISTRIBUTION_ID || "";
 const cloudfront = new aws.CloudFront();
 const s3 = new aws.S3();
 
-const allFeeds = [
-  myMediumArticlesFeed,
-  aiMediumaArticlesFeed,
-  cloudComputingMediumArticlesFeed
-];
+const otherFeeds = [aiMediumaArticlesFeed, cloudComputingMediumArticlesFeed];
 
 type ManagedUpload = {
   ETag: string;
@@ -28,9 +25,21 @@ type ManagedUpload = {
 
 async function getAllFeeds() {
   let jsonRes: Array<any> = [];
-  for (let feedUrl of allFeeds) {
+  let feed = await parser.parseURL(myMediumArticlesFeed);
+  jsonRes.push(feed);
+
+  for (let feedUrl of otherFeeds) {
     // console.log(feedUrl);
     let feed = await parser.parseURL(feedUrl);
+
+    for (let item of feed.items) {
+      if (item.content) {
+        item.content = await getArticle(item.link);
+      } else if (item["content:encoded"]) {
+        item["content:encoded"] = await getArticle(item.link);
+      }
+    }
+
     jsonRes.push(feed);
     // console.log(jsonRes);
   }

@@ -6,8 +6,10 @@ import get from "lodash.get";
 
 function HomePage(props: { blogStore?: BlogStore }) {
   const posts = get(props, "blogStore.posts", []);
+  const papers = get(props, "blogStore.papers", []);
+
   const loading = get(props, "blogStore.loading", false);
-  return <MainScreen posts={posts} loading={loading} />;
+  return <MainScreen posts={posts} loading={loading} papers={papers} />;
 }
 
 const injectedHomePage = inject("blogStore")(observer(HomePage));
