@@ -13,7 +13,7 @@ function MainScreen({ posts = [], papers = [], loading = true }) {
 
       <h2>Papers This Week</h2>
       <ul>
-        {papers.slice(0, 5).map((paper: any, id: number) => (
+        {papers.slice(0, 8).map((paper: any, id: number) => (
           <li key={paper.title + id}>
             <PaperShort paper={paper} />
           </li>

@@ -32,6 +32,7 @@ export interface Post {
 
 export interface Paper {
   id?: string;
+  slug?: string;
   abstract: string;
   abstract_text: string;
   authors: Array<string>;
@@ -41,38 +42,11 @@ export interface Paper {
   title?: string;
 }
 
-function createDummyPosts(n: number): Array<Post> {
-  let i = n;
-  let arr = [];
-  while (i > 0) {
-    arr.push({
-      id: i.toString(),
-      description: "",
-      seen: false,
-      body: "",
-      slug: "",
-      title: "",
-      publishedDate: new Date().toISOString(),
-      author: {
-        name: "",
-        title: "",
-        shortBio: ""
-      },
-      heroImage: {
-        title: "",
-        imageUrl: "https://via.placeholder.com/150"
-      },
-      source: "."
-    });
-    i = i - 1;
-  }
-  return arr;
-}
-
 export class BlogStore {
   @observable posts: Array<Post> = [];
   @observable loading: boolean = true;
   @observable currentPost: Post | null = null;
+  @observable currentPaper: Paper | null = null;
   @observable papers: Array<Paper> = [];
 
   constructor() {
@@ -88,9 +62,31 @@ export class BlogStore {
     const papers = res.data;
     console.log("papers", papers);
     runInAction(() => {
-      this.papers = papers;
+      this.papers = papers.map((paper: any) => ({
+        ...paper,
+        slug: encodeURI(paper.title)
+      }));
     });
   };
+
+  @action fetchPapers() {
+    let cached_papers_url =
+      "https://tim-urista-web-blog-articles-distribution-v1.s3.amazonaws.com/blogs/papers.json";
+    if (process.env.NODE_ENV === "production") {
+      cached_papers_url = "/blogs/papers.json";
+    }
+
+    const res = axios({
+      method: "get",
+      url: cached_papers_url,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "GET,HEAD,OPTIONS"
+      }
+    }).then(this.handlePapersUpdate);
+
+    return res;
+  }
 
   @action async fetch(handler: Function, slug?: String) {
     console.log(slug);
@@ -111,20 +107,7 @@ export class BlogStore {
       cached_articles_url = "/blogs/articles.json";
     }
 
-    let cached_papers_url =
-      "https://tim-urista-web-blog-articles-distribution-v1.s3.amazonaws.com/blogs/papers.json";
-    if (process.env.NODE_ENV === "production") {
-      cached_papers_url = "/blogs/papers.json";
-    }
-
-    axios({
-      method: "get",
-      url: cached_papers_url,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "GET,HEAD,OPTIONS"
-      }
-    }).then(this.handlePapersUpdate);
+    this.fetchPapers();
 
     const res = await axios({
       method: "get",
@@ -211,6 +194,26 @@ export class BlogStore {
 
   @computed get completedCount() {
     return this.posts.filter(todo => todo.seen === true).length;
+  }
+
+  @action
+  fetchCurrentPaper(slug: String) {
+    if (get(this.currentPaper, "slug") === slug) {
+      return;
+    }
+    const paper = this.papers.find(paper => paper.slug === slug);
+    if (paper) {
+      this.currentPaper = paper;
+    } else {
+      this.loading = true;
+      this.fetchPapers().then((res: any) =>
+        runInAction(() => {
+          this.currentPaper =
+            this.papers.find((d: Paper) => d.slug === slug) || null;
+          this.loading = false;
+        })
+      );
+    }
   }
 
   @action

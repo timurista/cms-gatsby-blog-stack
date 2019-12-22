@@ -1,19 +1,14 @@
 import React from "react";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Card from "@material-ui/core/Card";
 import IconButton from "@material-ui/core/IconButton";
 import CardHeader from "@material-ui/core/CardHeader";
-import Avatar from "@material-ui/core/Avatar";
 import { format } from "date-fns";
-import Iframe from "react-iframe";
-
-import ShareIcon from "@material-ui/icons/Share";
-import ThumbUp from "@material-ui/icons/ThumbUp";
 
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { makeStyles } from "@material-ui/core/styles";
 import { A } from "hookrouter";
+// import PDFDocumentIcon from "./PDFDocumentIcon";
 
 const useStyles = makeStyles({
   card: {
@@ -42,6 +37,10 @@ const useStyles = makeStyles({
   },
   subheader: {
     color: "rgb(156,156,156)"
+  },
+  link: {
+    color: "aqua",
+    textDecoration: "none"
   },
   bullet: {
     display: "inline-block",
@@ -79,28 +78,34 @@ function PaperShort({ paper }: { paper?: any }) {
           </IconButton>
         }
         title={
-          <A className={classes.title} href={`/blog/${blogIdUri}`}>
+          <A className={classes.title} href={`/paper/${blogIdUri}`}>
             {paper.title}
           </A>
         }
         subheader={
           <div className={classes.subheader}>
-            {format(new Date(paper.submission_date), "MMM d, yyyy")}
+            {format(new Date(paper.submission_date), "MMM d, yyyy")}{" "}
+            <a href={paper.pdf_link}>
+              <span role="img" aria-label="jsx-a11y/accessible-emoji">
+                📁
+              </span>
+            </a>
           </div>
         }
       />
       <CardContent>
-        <p>{paper.abstract_text.slice(0, 200) + "..."}</p>
-        <Iframe
-          url={`${paper.pdf_link}#zoom=110`}
-          width="100%"
-          height="500px"
-          id="pdf-object"
-          className="pdf-iframe"
-          display="block"
-          position="relative"
-        />
-        <div className={classes.description}>{paper.authors}</div>
+        <p>
+          {paper.abstract_text.slice(0, 250) + " "}
+          <span>
+            <A className={classes.link} href={`/paper/${blogIdUri}`}>
+              >>
+            </A>
+          </span>
+        </p>
+
+        <div className={classes.description}>
+          Authors: {paper.authors.join(", ")}
+        </div>
       </CardContent>
     </Card>
   );
