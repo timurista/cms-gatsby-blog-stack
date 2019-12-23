@@ -124,7 +124,10 @@ export class BlogStore {
       agg.push(
         ...blog.items.map((item: any) => {
           // const slug =
-          const end = item.guid.split("/").reverse()[0];
+          let end = encodeURI(item.title).toLowerCase();
+          if (item.guid) {
+            end = item.guid.split("/").reverse()[0];
+          }
           const id = end;
           const seen = false;
           const body = item["content"] || item["content:encoded"];
