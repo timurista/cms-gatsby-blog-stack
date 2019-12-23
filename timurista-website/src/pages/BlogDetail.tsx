@@ -5,6 +5,7 @@ import BlogPost from "../components/blog-post/BlogPost";
 import get from "lodash.get";
 
 function BlogDetail({ id, blogStore }: { id: String; blogStore?: BlogStore }) {
+  console.log(id);
   useEffect(() => {
     window.scrollTo(0, 0);
     if (blogStore) {

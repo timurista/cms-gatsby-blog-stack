@@ -101,7 +101,7 @@ function BlogPostShort({ post }: { post?: any }) {
         <a href={`${post.link}`}>
           <div
             className={classes.img}
-            style={{ backgroundImage: `url(${post.heroImage.imageUrl})` }}
+            style={{ backgroundImage: `url(${post.heroImage.url})` }}
           ></div>
         </a>
         <div className={classes.description}>{post.description}</div>

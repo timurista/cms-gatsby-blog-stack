@@ -42,6 +42,13 @@ export interface Paper {
   title?: string;
 }
 
+function convertToSlug(text: string) {
+  return text
+    .toLowerCase()
+    .replace(/ /g, "-")
+    .replace(/[^\w-]+/g, "");
+}
+
 export class BlogStore {
   @observable posts: Array<Post> = [];
   @observable loading: boolean = true;
@@ -89,15 +96,6 @@ export class BlogStore {
   }
 
   @action async fetch(handler: Function, slug?: String) {
-    console.log(slug);
-    // return;
-    // let data = null;
-    // const { data: { err, result } } = await app.axios('/files')
-    // let params = undefined;
-    // if (slug) {
-    //   params = { slug };
-    // }
-
     // get the files from cf json
     let cached_articles_url =
       "http://d2z3zyrhi690um.cloudfront.net/blogs/articles.json";
@@ -120,61 +118,49 @@ export class BlogStore {
 
     // console.log("papers", papersRes);
     let agg = [];
-    for (let blog of res.data) {
-      agg.push(
-        ...blog.items.map((item: any) => {
-          // const slug =
-          let end = encodeURI(item.title).toLowerCase();
-          if (item.guid) {
-            end = item.guid.split("/").reverse()[0];
-          }
-          const id = end;
-          const seen = false;
-          const body = item["content"] || item["content:encoded"];
-          const title = item.title;
-          const slug = end;
-          // const image = body.find('src=')
-          var regex = /<img.*?src="(.*?)"/;
-          const regexed = regex.exec(body);
-          // console.log("regexed", body, regexed);
-          var src = regexed ? regexed[1] : null;
-          const heroImage = {
-            imageUrl: src
-          };
+    for (let item of res.data) {
+      const id = convertToSlug(item.title);
+      // if (item.guid) {
+      //   end = item.guid.split("/").reverse()[0];
+      // }
+      const seen = false;
+      const body = item["content"] || item["content:encoded"];
+      const title = item.title;
+      const slug = id;
+      // const image = body.find('src=')
+      // var regex = /<img.*?src="(.*?)"/;
+      // const regexed = regex.exec(body);
+      // // console.log("regexed", body, regexed);
+      // var src = regexed ? regexed[1] : null;
+      const author = { name: item.author };
+      let description = item.description;
+      // if (item.contentSnippet) {
+      //   description = item.contentSnippet.split("Continue reading")[0];
+      // }
 
-          const author = {
-            name: item.creator,
-            title: "",
-            shortBio: ""
-          };
-          let description = "";
-          if (item.contentSnippet) {
-            description = item.contentSnippet.split("Continue reading")[0];
-          }
+      const publishedDate = item.published;
+      // console.log("item", heroImage, item);
+      if (!item.image) {
+        continue;
+      }
 
-          const publishedDate = item.pubDate;
+      const heroImage = { url: item.image, title: item.title };
 
-          if (!heroImage.imageUrl) {
-            return null;
-          }
-
-          return {
-            ...item,
-            id,
-            description,
-            seen,
-            body,
-            slug,
-            title,
-            publishedDate,
-            author,
-            heroImage,
-            source: blog.title
-          };
-        })
-      );
+      const blogPost = {
+        ...item,
+        id,
+        description,
+        seen,
+        body,
+        slug,
+        title,
+        publishedDate,
+        author,
+        heroImage,
+        source: item.title
+      };
+      agg.push(blogPost);
     }
-    console.log(agg);
     agg = agg.filter(a => a != null);
     // sort
     agg.sort(
@@ -183,16 +169,6 @@ export class BlogStore {
         new Date(a.publishedDate).getTime()
     );
     handler(agg);
-
-    // axios({
-    //   method: "get",
-    //   url: CF_BACKEND_API,
-    //   params,
-    //   headers: {
-    //     "Access-Control-Allow-Origin": "*",
-    //     "Access-Control-Allow-Headers": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
-    //   }
-    // }).then(res => handler(res));
   }
 
   @computed get completedCount() {
@@ -221,10 +197,12 @@ export class BlogStore {
 
   @action
   fetchCurrentPost(slug: String) {
+    console.log("SLUG FETCHING", slug, get(this.currentPost, "slug"));
     if (get(this.currentPost, "slug") === slug) {
-      return;
+      return null;
     }
     const post = this.posts.find(post => post.slug === slug);
+    console.log("POSTS", this.posts);
     if (post) {
       this.currentPost = post;
     } else {
@@ -232,6 +210,10 @@ export class BlogStore {
       this.fetch(
         (res: any) =>
           runInAction(() => {
+            console.log(
+              "THE RES",
+              res.find((d: Post) => d.slug === slug)
+            );
             this.currentPost = res.find((d: Post) => d.slug === slug);
             this.loading = false;
           }),

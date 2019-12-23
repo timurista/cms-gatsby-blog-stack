@@ -13,6 +13,20 @@
   // padding: 16px;
   // border-radius: 8px;
   .contents {
+    .dn {
+      display: block;
+    }
+    .ba {
+      border: none;
+    }
+    img[role="presentation"]:nth-child(2) {
+      display: none;
+    }
+    .dt,
+    .ds,
+    .dd {
+      display: block;
+    }
     margin: 0 auto;
     position: relative;
     max-width: calc(680px + 10vw);
