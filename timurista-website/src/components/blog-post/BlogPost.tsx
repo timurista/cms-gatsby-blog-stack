@@ -11,6 +11,11 @@ export interface BlogPostProps {
 
 function BlogPost({ post }: BlogPostProps) {
   console.log("POST", post);
+  const correctedBody = (post.body || "").replace(
+    /\/max\/[0-9]+\//g,
+    "/max/1024/"
+  );
+
   //   console.log("post", post);
   return (
     <div className="Blog-Post">
@@ -29,7 +34,7 @@ function BlogPost({ post }: BlogPostProps) {
 
         <div>
           {/* <SidebarActions author={post.author} /> */}
-          <div dangerouslySetInnerHTML={{ __html: post.body || "" }} />
+          <div dangerouslySetInnerHTML={{ __html: correctedBody }} />
           {/* <ReactMarkdown source={post.body || ""} /> */}
         </div>
       </div>

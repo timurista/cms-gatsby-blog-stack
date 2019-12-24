@@ -42,6 +42,21 @@ export interface Paper {
   title?: string;
 }
 
+function uniq_fast(a: any) {
+  var seen: any = new Set();
+  var out = [];
+  var len = a.length;
+  var j = 0;
+  for (var i = 0; i < len; i++) {
+    var item = a[i];
+    if (!seen.has(item.slug)) {
+      seen.add(item.slug);
+      out[j++] = item;
+    }
+  }
+  return out;
+}
+
 function convertToSlug(text: string) {
   return text
     .toLowerCase()
@@ -77,8 +92,7 @@ export class BlogStore {
   };
 
   @action fetchPapers() {
-    let cached_papers_url =
-      "https://tim-urista-web-blog-articles-distribution-v1.s3.amazonaws.com/blogs/papers.json";
+    let cached_papers_url = "../../../local-cache/blogs/papers.json";
     if (process.env.NODE_ENV === "production") {
       cached_papers_url = "/blogs/papers.json";
     }
@@ -97,10 +111,7 @@ export class BlogStore {
 
   @action async fetch(handler: Function, slug?: String) {
     // get the files from cf json
-    let cached_articles_url =
-      "http://d2z3zyrhi690um.cloudfront.net/blogs/articles.json";
-    cached_articles_url =
-      "https://tim-urista-web-blog-articles-distribution-v1.s3.amazonaws.com/blogs/articles.json";
+    let cached_articles_url = "/local-cache/blogs/articles.json";
     if (process.env.NODE_ENV === "production") {
       cached_articles_url = "/blogs/articles.json";
     }
@@ -161,6 +172,8 @@ export class BlogStore {
       };
       agg.push(blogPost);
     }
+
+    agg = uniq_fast(agg);
     agg = agg.filter(a => a != null);
     // sort
     agg.sort(
