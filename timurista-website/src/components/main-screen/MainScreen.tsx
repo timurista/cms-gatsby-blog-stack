@@ -11,20 +11,20 @@ function MainScreen({ posts = [], papers = [], loading = true }) {
     <div className="Main-Screen">
       {loading && <div className="ghost-components"></div>}
 
-      <h2>Papers This Week</h2>
-      <ul>
-        {papers.slice(0, 8).map((paper: any, id: number) => (
-          <li key={paper.title + id}>
-            <PaperShort paper={paper} />
-          </li>
-        ))}
-      </ul>
-
       <h2>Posts This Week</h2>
       <ul>
         {posts.map((post: any) => (
           <li key={post.id}>
             <BlogPostShort post={post} />
+          </li>
+        ))}
+      </ul>
+
+      <h2>Papers This Week</h2>
+      <ul>
+        {papers.slice(0, 5).map((paper: any, id: number) => (
+          <li key={paper.title + id}>
+            <PaperShort paper={paper} />
           </li>
         ))}
       </ul>

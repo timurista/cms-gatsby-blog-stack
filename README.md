@@ -17,3 +17,8 @@ Built with https://github.com/gatsbyjs/gatsby
 - prometheus client
 
 `
+
+## TODOS
+
+s3 bucket authorization
+https://github.com/Widen/cloudfront-auth
