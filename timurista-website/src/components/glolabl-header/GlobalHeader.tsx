@@ -3,7 +3,7 @@ import "./GlobalHeader.scss";
 import HeroImage from "../hero-image/HeroImage";
 import { A } from "hookrouter";
 import { BlogStore } from "../../store/BlogStore";
-import { Button } from "@material-ui/core";
+import { Button, Typography } from "@material-ui/core";
 import get from "lodash.get";
 import { inject, observer } from "mobx-react";
 
@@ -15,17 +15,21 @@ function GlobalHeader(props: GlobalHeaderProps) {
   return (
     <header className="Global-Header">
       <ul className="nav">
+      <HeroImage />
         <li className="nav-item">
+        
+        <Typography variant="body2">
           <A className="box" href="/">
-            Tim Urista
+            Tim Urista            
           </A>
+          </Typography>
         </li>
-        <HeroImage />
+        
         <li className="nav-item divider">
           <A href="/blog">Blog</A>
         </li>
         <li className="nav-item">
-          <A href="/blog">Human 2.0</A>
+          <A href="/about">About me</A>
         </li>
         <li className="nav-item">
           <A href="/blog">Services</A>

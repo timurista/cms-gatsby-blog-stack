@@ -6,6 +6,8 @@ import * as serviceWorker from "./serviceWorker";
 import blogStore from "../src/store/BlogStore";
 import authStore from "../src/store/AuthStore";
 import { Provider } from "mobx-react";
+import { ThemeProvider } from '@material-ui/core/styles';
+import theme from './themes/mainTheme';
 
 const stores = {
   blogStore,
@@ -14,7 +16,9 @@ const stores = {
 
 ReactDOM.render(
   <Provider {...stores}>
+    <ThemeProvider theme={theme}>
     <App />
+    </ThemeProvider>
   </Provider>,
   document.getElementById("root")
 );

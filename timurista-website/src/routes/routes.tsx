@@ -1,6 +1,6 @@
 import React from "react";
 import HomePage from "../pages/Home";
-import AboutPage from "../pages/Home";
+import AboutPage from "../pages/About";
 import BlogDetail from "../pages/BlogDetail";
 import PaperDetail from "../pages/PaperDetail";
 import ProductOverview from "../pages/Home";
