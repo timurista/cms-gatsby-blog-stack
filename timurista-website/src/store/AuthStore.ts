@@ -57,11 +57,15 @@ export class AuthStore {
   constructor() {
     const TOKEN_LS_KEY = 'timurista.com-temp-token';
     let token = getWithExpiry(TOKEN_LS_KEY)
+    let fetchFromUrl = false
     if (!token) {      
       token = parseToken();
+      fetchFromUrl = true;
+    }
+    if (token && fetchFromUrl) {
       window.location.replace(initialUrl);
     }
-    if (token) {
+    else if (token) {
       this.fetchUserDetails(token);
       setWithExpiry(TOKEN_LS_KEY, token, 12*60*60*1000)
     }
