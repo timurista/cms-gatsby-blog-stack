@@ -1,17 +1,13 @@
 import React from "react";
 import CardContent from "@material-ui/core/CardContent";
 import Card from "@material-ui/core/Card";
-import IconButton from "@material-ui/core/IconButton";
-import CardHeader from "@material-ui/core/CardHeader";
-import { format } from "date-fns";
 
-import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { makeStyles } from "@material-ui/core/styles";
-import { A } from "hookrouter";
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
+import { PieChart, Pie, Cell, Tooltip } from 'recharts';
 // const data = [{name: 'Page A', uv: 400, pv: 2400, amt: 2400}, ...];
 
 // import PDFDocumentIcon from "./PDFDocumentIcon";
+
 
 const useStyles = makeStyles({
   card: {
@@ -71,30 +67,26 @@ function pairs(words: Array<string>) {
         for (var j = i; j < words.length - 1; j++) {
             const curr_word = words[i];
             const next_word= words[j+1]
-            let isOk = curr_word.toLowerCase() !== next_word.toLowerCase()
-            const badWords = ["this","that"]
-            isOk = !badWords.includes(curr_word) && !badWords.includes(next_word)
+            let isOk = curr_word.toLowerCase() != next_word.toLowerCase()
+            const badWords = ["this","that", "where", "with"]
+            isOk = isOk && !badWords.includes(curr_word) && !badWords.includes(next_word)
 
-            if (curr_word.length > 3 && next_word.length > 3 && isOk) {
-                pairs.add([words[i], words[j+1]]);
+            if (curr_word.length > 3 && next_word.length > 3) {
+                if (isOk) {
+                  pairs.add([curr_word, next_word]);
+                }
             }
         }
     }
     return Array.from(pairs)
 }
 
-function MainResearchPaper({ papers = []}: {papers: Array<any>}) {
-  const classes = useStyles();
-  if (!papers.length) {
-    return null;
-  }
+function getData(papers: any) {
   const phrases: any = {}
-  papers.forEach(paper => {
-      console.log(paper)
+  papers.forEach((paper: any) => {
     //   debugger;
     const splitText = paper.abstract_text.toLowerCase().split(/\s+/g)
     const bigrams: Array<any> = pairs(splitText.slice(0,100))
-    console.log(bigrams)
     for (let bigram of bigrams) {
         if (bigram.length > 1) {
             const key = bigram.join(' ').toLowerCase()
@@ -108,24 +100,77 @@ function MainResearchPaper({ papers = []}: {papers: Array<any>}) {
       return {
             phrase,
             name: phrase,
-            count: phrases[phrase]
+            value: phrases[phrase]
         }
-  }).sort((a,b) => b.count - a.count).slice(10,30)
-  console.log(phrases, data)
+  }).sort((a,b) => b.value - a.value).slice(1,15)
+  // console.log(phrases, data)
+  return data
+}
+
+const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+
+const RADIAN = Math.PI / 180;
+const renderCustomizedLabel = ({
+	cx, cy, midAngle, innerRadius, outerRadius, percent, index, value, name, ...extra
+}: any) => {
+	const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+	const x = cx + radius * Math.cos(-midAngle * RADIAN);
+  const y = cy + radius * Math.sin(-midAngle * RADIAN);
+  const x_2 = cx + radius * Math.cos(-midAngle * RADIAN);
+  const y_2 = cy + radius * Math.sin(-midAngle * RADIAN);
+  
+  // console.log('percent', percent)
+	return (
+    <>
+    <text x={extra.x} y={extra.y} fill="white" dominantBaseline="central" textAnchor={x > cx ? 'start' : 'end'}>
+      {name}
+    </text>
+		<text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">      
+			{`${(percent * 100).toFixed(0)}%`}
+		</text>
+    </>
+	);
+};
+
+// export function DataPieChart({ data }: { data: any}) {
+export class DataPieChart extends React.PureComponent<{data: any}> {
+  render() {
+    const { data } = this.props;
+		return (
+			<PieChart width={960} height={600}>
+				<Pie
+					data={data}
+					cx={480}
+					cy={300}
+					labelLine={false}
+					label={renderCustomizedLabel}
+          fill="#8884d8"
+          outerRadius={190}
+          isAnimationActive={false} 
+					dataKey="value"
+				>
+					{
+						data.map((entry: any, index: number) => <Cell  key={`cell-${index}`} fill={COLORS[index % COLORS.length]}>{entry.name}</Cell>)
+					}
+				</Pie>
+        <Tooltip />
+			</PieChart>
+    );
+  }
+}
+
+
+function MainResearchPaper({ papers = []}: {papers: Array<any>}) {
+  const classes = useStyles();
+  if (!papers.length) {
+    return null;
+  }
+  const data = getData(papers)
+  console.log(data)
   return (
     <Card className={classes.card}>
       <CardContent>
-          <h2></h2>
-      <LineChart  width={900} height={300} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-            <Line type="monotone" dataKey="count" stroke="#8884d8" />
-            <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-            <XAxis dataKey="name" />
-            <YAxis dataKey="count" />
-            <Tooltip labelFormatter={(label: any) => {
-                // debugger
-                return <span style={{color: "black"}}>{label}</span>
-            }} />
-        </LineChart>
+        <DataPieChart data={data} />
       </CardContent>
     </Card>
   );
