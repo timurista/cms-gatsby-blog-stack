@@ -96,13 +96,15 @@ export class BlogStore {
     if (process.env.NODE_ENV === "production") {
       cached_papers_url = "/blogs/papers.json";
     }
+    cached_papers_url = "https://thetimurista.com/blog/papers.json"
 
     const res = axios({
       method: "get",
       url: cached_papers_url,
       headers: {
         "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "GET,HEAD,OPTIONS"
+        "Access-Control-Allow-Headers": "GET,HEAD,OPTIONS",
+        "Content-Type": "application/json"
       }
     }).then(this.handlePapersUpdate);
 
