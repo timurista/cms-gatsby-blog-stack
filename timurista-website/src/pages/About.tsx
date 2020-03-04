@@ -1,6 +1,7 @@
 import React from "react";
 import { Paper, Grid, Typography, Box } from "@material-ui/core";
 import {makeStyles } from '@material-ui/core/styles';
+import Testimonials from "../components/testimonials/Testimonials"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -22,10 +23,19 @@ function About() {
     <Grid container>
       <Paper className={classes.root}>
       <Typography variant="h3">About</Typography>
+        <Typography variant="body1">
+          Ex-Facebook, Software Engineer at Roku.
+        </Typography>
+
+        <Testimonials />
+
+      
+      <Typography variant="h3">Expert</Typography>
       <p>
-      <Typography variant="body1">
-        I am a software engineer working in Silicon valley on cloud infrastrcuture and scalable models.
-      </Typography>
+        * UI/UX react, angular, javascript
+        * devops, AWS
+        * Machine learning, python
+      {/* <Expertise /> */}
       </p>
     </Paper>
     </Grid>
