@@ -96,7 +96,6 @@ export class BlogStore {
     if (process.env.NODE_ENV === "production") {
       cached_papers_url = "/blogs/papers.json";
     }
-    cached_papers_url = "https://thetimurista.com/blog/papers.json"
 
     const res = axios({
       method: "get",

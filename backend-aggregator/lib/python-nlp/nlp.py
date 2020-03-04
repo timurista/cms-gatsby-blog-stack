@@ -39,8 +39,8 @@ def main():
     # print("Noun phrases:", [chunk.text for chunk in doc.noun_chunks])
     # print("ents", [(ent.text, ent.label_) for ent in doc.ents if ent.label_ == "ORG"])
     # print("Verbs:", [token.lemma_ for token in doc if token.pos_ == "VERB"])
-    print(cnt_2.most_common(21)[10:])
-    return list(cnt.most_common(11)[1:])
+    print(cnt_2.most_common(41)[10:])
+    return list(cnt.most_common(21)[1:])
 
 if __name__ == "__main__":
     print(main())
