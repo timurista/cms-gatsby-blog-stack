@@ -14,11 +14,19 @@ function PaperLong({ paper }: IPaperLong) {
   //   console.log("post", post);
   return (
     <div className="Blog-Post">
-      <div className="contents">
-        <h1 id="article-header">{paper.title}</h1>
-        <div>
+      <div className="contents" >
+        <h1 id="article-header">{paper.title}</h1>        
           <div dangerouslySetInnerHTML={{ __html: paper.abstract || "" }} />
         </div>
+        <div style={{ marginBottom: 8}}>
+          Read full paper:
+          <a href={paper.pdf_link}>
+              <span role="img" aria-label="jsx-a11y/accessible-emoji">
+                📁
+              </span>
+            </a>
+        </div>
+        <div>
         <Iframe
           url={
             "http://docs.google.com/viewer?url=" +

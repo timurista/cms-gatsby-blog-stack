@@ -60,15 +60,14 @@ export class AuthStore {
     let fetchFromUrl = false
     if (!token) {      
       token = parseToken();
-      fetchFromUrl = true;
+      // window.location.replace(initialUrl);
     }
-    if (token && fetchFromUrl) {
-      window.location.replace(initialUrl);
-    }
-    else if (token) {
-      this.fetchUserDetails(token);
-      setWithExpiry(TOKEN_LS_KEY, token, 12*60*60*1000)
-    }
+    // if (token && fetchFromUrl) {
+    //   window.location.replace(initialUrl);
+    // }
+    
+    this.fetchUserDetails(token);
+    setWithExpiry(TOKEN_LS_KEY, token, 12*60*60*1000)
   }
 
   @action async fetchUserDetails(token: string) {

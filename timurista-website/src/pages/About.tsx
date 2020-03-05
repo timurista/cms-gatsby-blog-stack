@@ -15,28 +15,38 @@ const useStyles = makeStyles(theme => ({
     minHeight: '400px',
     padding: theme.spacing(2),
   },
+  divider: {
+    margin: 20
+  }
 }));
 
 function About() {
   const classes= useStyles();
-  return <Box height="100vh">
+  return <Box>
     <Grid container>
       <Paper className={classes.root}>
-      <Typography variant="h3">About</Typography>
-        <Typography variant="body1">
-          Ex-Facebook, Software Engineer at Roku.
-        </Typography>
+      <Typography variant="h3">Proven results</Typography>
 
+      <Box marginBottom={8} marginTop={8}>
         <Testimonials />
+      </Box>
 
+
+      <Typography variant="h3">Solutions for your size</Typography>
+        <Box marginBottom={8} marginTop={8}>
+          * Serverless microsites
+          * SPA blogs
+          * Full end to end Solutions
+          * Devops Support
+        </Box>
+
+        
+        <Typography variant="h3">Previous Work</Typography>
+        <Box marginBottom={8} marginTop={8}>
+          Ex-Facebook, Software Engineer at Roku.          
+        </Box>
       
-      <Typography variant="h3">Expert</Typography>
-      <p>
-        * UI/UX react, angular, javascript
-        * devops, AWS
-        * Machine learning, python
-      {/* <Expertise /> */}
-      </p>
+
     </Paper>
     </Grid>
   </Box>;

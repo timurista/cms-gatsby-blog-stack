@@ -3,6 +3,8 @@ import CardContent from "@material-ui/core/CardContent";
 import Card from "@material-ui/core/Card";
 import IconButton from "@material-ui/core/IconButton";
 import CardHeader from "@material-ui/core/CardHeader";
+import Avatar from "@material-ui/core/Avatar";
+
 import { format } from "date-fns";
 
 // @ts-ignore
@@ -36,8 +38,11 @@ const useStyles = makeStyles({
     alignItems: "center"
   },
   attr: {
-    fontSize: 14,
-    textAlign: "center"
+    fontSize: 16,
+    textAlign: "center",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
   },
   quoteIcon: {
     fontSize: 40,
@@ -72,6 +77,9 @@ const useStyles = makeStyles({
   pos: {
     marginBottom: 12
   },
+  name: {
+    marginRight: 8,
+  },
   img: {
     backgroundSize: "cover",
     width: "100%",
@@ -92,7 +100,7 @@ function Testimonial({ testimonial }: { testimonial?: any }) {
         <div className={classes.quoteIcon}>“</div>{testimonial.statement}<div className={classes.quoteIcon}>”</div>
         </blockquote>
         <div className={classes.attr}>
-            - {testimonial.name}
+            <span className={classes.name}>{testimonial.name}</span> <Avatar src={testimonial.image} />
         </div>
       </CardContent>
     </Card>
