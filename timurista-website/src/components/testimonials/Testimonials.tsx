@@ -17,17 +17,24 @@ import { makeStyles } from "@material-ui/core/styles";
 import { A } from "hookrouter";
 // import PDFDocumentIcon from "./PDFDocumentIcon";
 
+const bgColors = [
+  "rgb(22,12,12)",
+  "rgb(10,25,13)",
+  "rgb(28,12,15)",
+  "rgb(13,10,22)",
+]
+
 const useStyles = makeStyles({
   card: {
     minWidth: 275,
     margin: "0 auto",
-    //   maxWidth: 500,
-    background: "rgb(84,84,84)",
-    //   background: "rgb(35,35,35)",
-    //   border: "1px solid white",
-    //   color: "white",
-    //   background: "rgba(33,33,33,1.0)",
+    background: (props: any) => bgColors[props.index % bgColors.length],
     color: "white"
+  },
+  cardContent: {
+    margin: 12,
+    border: "1px solid white",
+    borderRadius: 16
   },
   quote: {
     color: "white",
@@ -87,15 +94,16 @@ const useStyles = makeStyles({
   }
 });
 
-function Testimonial({ testimonial }: { testimonial?: any }) {
-  const classes = useStyles();
+function Testimonial({ testimonial, index }: { testimonial?: any, index: number }) {
+
+  const classes = useStyles({ index });
   // if (!testimonial) {
   //   return null;
   // }
   console.log('testimonial', testimonial)
   return (
     <Card className={classes.card}>      
-      <CardContent>
+      <CardContent className={classes.cardContent}>
         <blockquote className={classes.quote}>
         <div className={classes.quoteIcon}>“</div>{testimonial.statement}<div className={classes.quoteIcon}>”</div>
         </blockquote>
@@ -112,9 +120,9 @@ export function Testimonials() {
     console.log(testimonials)
     return (
         <Carousel animation="slide" autoPlay >
-            {testimonials.map((testimonial: any) => (
+            {testimonials.map((testimonial: any, index: number) => (
               <div key={testimonial.name}>
-                <Testimonial testimonial={testimonial} />
+                <Testimonial testimonial={testimonial} index={index} />
               </div>
             ))}
         </Carousel>
