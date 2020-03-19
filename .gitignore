@@ -72,3 +72,4 @@ serverless-bots
 ## python things
 backend-aggregator/lib/python-src/*
 !backend-aggregator/lib/python-src/pdfextractor.py
+docker-wordpress/wordpress-docker-compose
