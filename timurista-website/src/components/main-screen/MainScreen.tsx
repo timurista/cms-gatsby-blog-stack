@@ -11,17 +11,6 @@ function MainScreen({ posts = [], papers = [], loading = true }) {
   return (
     <div className="Main-Screen">
       {loading && <div className="ghost-components"></div>}
-      <h2>Trending AI research terms</h2>
-      <MainResearchGraph papers={papers}/>
-
-      <h2>Papers This Week</h2>
-      <ul>
-        {papers.slice(0, 5).map((paper: any, id: number) => (
-          <li key={paper.title + id}>
-            <PaperShort paper={paper} />
-          </li>
-        ))}
-      </ul>
 
       <h2>Posts This Week</h2>
       <ul>
@@ -32,7 +21,17 @@ function MainScreen({ posts = [], papers = [], loading = true }) {
         ))}
       </ul>
 
-      
+      {/* <h2>Trending AI research terms</h2>
+      <MainResearchGraph papers={papers}/> */}
+
+      <h2>Papers This Week</h2>
+      <ul>
+        {papers.slice(0, 5).map((paper: any, id: number) => (
+          <li key={paper.title + id}>
+            <PaperShort paper={paper} />
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
