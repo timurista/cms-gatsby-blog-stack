@@ -26,7 +26,7 @@ function Footer() {
             <A href="/membership">
               <h3>Membership</h3>
             </A>
-            <p>For as little as $5 a month become a member to read the feed</p>
+            <p>Join the mastermind group today!</p>
           </div>
         </div>
         <div className="separator"></div>

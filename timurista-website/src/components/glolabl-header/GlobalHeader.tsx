@@ -19,33 +19,33 @@ import { withStyles } from "@material-ui/core/styles";
 
 const StyledMenu = withStyles({
   paper: {
-    border: "1px solid #d3d4d5"
-  }
+    border: "1px solid #d3d4d5",
+  },
 })((props: any) => (
   <Menu
     elevation={0}
     getContentAnchorEl={null}
     anchorOrigin={{
       vertical: "bottom",
-      horizontal: "center"
+      horizontal: "center",
     }}
     transformOrigin={{
       vertical: "top",
-      horizontal: "center"
+      horizontal: "center",
     }}
     {...props}
   />
 ));
 
-const StyledMenuItem = withStyles(theme => ({
+const StyledMenuItem = withStyles((theme) => ({
   root: {
     "&:focus": {
       backgroundColor: theme.palette.primary.main,
       "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
-        color: theme.palette.common.white
-      }
-    }
-  }
+        color: theme.palette.common.white,
+      },
+    },
+  },
 }))(MenuItem);
 
 export interface GlobalHeaderProps {
@@ -79,13 +79,10 @@ function GlobalHeader(props: GlobalHeaderProps) {
           <A href="/blog">Blog</A>
         </li>
         <li className="nav-item">
-          <A href="/about">About me</A>
+          <A href="/about">About</A>
         </li>
         <li className="nav-item">
-          <A href="/blog">Services</A>
-        </li>
-        <li className="nav-item">
-          <A href="/privacy">Privacy</A>
+          <A href="/contact">Contact</A>
         </li>
 
         <li>
