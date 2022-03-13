@@ -67,7 +67,7 @@ function GlobalHeader(props: GlobalHeaderProps) {
     <header className="Global-Header">
       <ul className="nav">
         <HeroImage />
-        <li className="nav-item">
+        <li className="nav-item" id="timurista-name">
           <Typography variant="body2">
             <A className="box" href="/">
               Tim Urista
