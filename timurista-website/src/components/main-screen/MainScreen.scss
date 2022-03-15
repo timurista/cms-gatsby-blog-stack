@@ -1,5 +1,8 @@
 .Main-Screen {
   background: #343434;
+  // background: linear-gradient(#322b2b, #61549d);
+  // background: linear-gradient(132deg, #3e3738, #591BC5, #212335);
+  // animation: gradient 15s ease infinite;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -36,4 +39,18 @@
       margin-bottom: 18px;
     }
   }
+  /* Animate Background*/
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
+
+}
+

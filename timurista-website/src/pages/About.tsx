@@ -93,30 +93,34 @@ function About() {
 
           <Typography variant="h3">Companies I have worked at</Typography>
           <Box marginBottom={8} marginTop={2}>
-            <Box display="flex" justifyContent="space-evenly">
-              <Box flex="stretch">
-                <h4>Big names</h4>
-                <ul>
-                  <li>Roku</li>
-                  <li>Facebook</li>
-                </ul>
-              </Box>
-
-              <Box flex="stretch">
-                <h4>Start ups</h4>
-                <ul>
-                  <li>Aerion</li>
-                  <li>Iterate AI</li>
-                </ul>
-              </Box>
-
-              <Box flex="stretch">
-                <h4>Health Industry</h4>
-                <ul>
-                  <li>Healthtrio</li>
-                  <li>Weedmaps</li>
-                </ul>
-              </Box>
+            <Box flex="stretch">
+              <ul
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr",
+                  gridGap: "20px",
+                  textAlign: "center",
+                  alignContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <li>
+                  <img width="16px" height="16px" src="/images/roku.png"></img>{" "}
+                  Roku
+                </li>
+                <li>
+                  <img
+                    width="16px"
+                    height="16px"
+                    src="/images/facebook.png"
+                  ></img>{" "}
+                  Facebook
+                </li>
+                <li>Aerion</li>
+                <li>Iterate AI</li>
+                <li>Healthtrio</li>
+                <li>Weedmaps</li>
+              </ul>
             </Box>
           </Box>
 
@@ -125,7 +129,7 @@ function About() {
             <img src="/images/timrusitaAppScreenshot.png" height={800} />
           </Box>
 
-          <Typography variant="h3">Ready to get work done?</Typography>
+          <Typography variant="h3">Want to Collaborate?</Typography>
           <Box marginBottom={8} marginTop={2}>
             <Link
               className={classes.link}
